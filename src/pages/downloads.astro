@@ -1,36 +1,37 @@
 ---
-import fs from "node:fs";
-import path from "node:path";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
+// sizeKb is set by hand (rather than read from disk at build time) so this page
+// has no Node built-in dependencies — some hosts bundle pages for a non-Node
+// runtime (e.g. Cloudflare Workers), where `node:fs` can't be resolved.
 const resources = [
   {
     file: "daily-prayer-tracker.pdf",
     title: "Daily Prayer Tracker",
     description: "A printable weekly checklist for the five daily prayers.",
+    sizeKb: 2,
   },
   {
     file: "gratitude-journal-prompts.pdf",
     title: "Gratitude Journal Prompts",
     description: "Ten prompts for a short daily gratitude practice.",
+    sizeKb: 2,
   },
   {
     file: "ramadan-planning-worksheet.pdf",
     title: "Ramadan Planning Worksheet",
     description: "A one-page worksheet for planning the month ahead.",
+    sizeKb: 2,
   },
   {
     file: "recommended-reading-list.pdf",
     title: "Recommended Reading List",
     description: "A template for curating your own trusted reading list.",
+    sizeKb: 1,
   },
-].map((resource) => {
-  const filePath = path.join(process.cwd(), "public", "downloads", resource.file);
-  const sizeKb = Math.max(1, Math.round(fs.statSync(filePath).size / 1024));
-  return { ...resource, sizeKb };
-});
+];
 ---
 
 <BaseLayout title="Downloads" description="Free downloadable resources from Noor & Knowledge.">

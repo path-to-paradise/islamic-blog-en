@@ -57,7 +57,7 @@ Wrap Arabic text in a paragraph with the `arabic` class to get right-to-left lay
 The `/downloads` page lists resources from [`src/pages/downloads.astro`](src/pages/downloads.astro). To add one:
 
 1. Drop the file (e.g. a PDF) into [`public/downloads/`](public/downloads).
-2. Add an entry to the `resources` array at the top of `src/pages/downloads.astro` with its filename, title, and description — file size is read automatically at build time.
+2. Add an entry to the `resources` array at the top of `src/pages/downloads.astro` with its filename, title, description, and size in KB (shown on the download button).
 
 The four PDFs included are placeholder samples — swap them for your own resources.
 
