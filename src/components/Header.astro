@@ -40,18 +40,20 @@ const contactHref = `${base}/contact`;
 
     <p class="site-tagline">{SITE_TAGLINE}</p>
 
-    <form class="header-search" action={searchHref} method="get" role="search">
-      <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true">
-        <circle cx="9" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
-        <line x1="13.6" y1="13.6" x2="18" y2="18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-      </svg>
-      <input type="search" name="q" placeholder="Search posts…" aria-label="Search posts" />
-    </form>
-
     <nav class="site-nav" id="site-nav">
-      <a href={homeHref}>Home</a>
-      <a href={aboutHref}>About</a>
-      <a href={contactHref}>Contact</a>
+      <div class="nav-links">
+        <a href={homeHref}>Home</a>
+        <a href={aboutHref}>About</a>
+        <a href={contactHref}>Contact</a>
+      </div>
+
+      <form class="header-search" action={searchHref} method="get" role="search">
+        <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true">
+          <circle cx="9" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+          <line x1="13.6" y1="13.6" x2="18" y2="18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+        <input type="search" name="q" placeholder="Search posts…" aria-label="Search posts" />
+      </form>
     </nav>
   </div>
 </header>
