@@ -61,6 +61,22 @@ h1, h2, h3, h4 {
   margin: 0 0 0.5em;
 }
 
+/* Explicit sizes so every h1 (about, contact, privacy, terms, disclaimer,
+   downloads, search, 404) has a designed size instead of relying on the
+   browser's sectioning-context default. More specific rules below (e.g.
+   .post-header h1, .post-content h2) still take priority where set. */
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+}
+
 p {
   margin: 0 0 1em;
 }
@@ -176,8 +192,8 @@ img {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   flex-shrink: 0;
   appearance: none;
   background: rgba(255, 255, 255, 0.08);
@@ -322,8 +338,21 @@ img {
   .nav-links {
     order: 2;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.85rem;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+
+  .nav-links a {
+    padding: 0.75rem 0.25rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .nav-links a:active {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .nav-links a::after {
+    display: none;
   }
 
   .header-search {
@@ -341,6 +370,18 @@ img {
 main {
   padding-top: 3.5rem;
   padding-bottom: 4rem;
+}
+
+/* ---------- 404 ---------- */
+
+.error-page {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.error-page .back-link {
+  justify-content: center;
+  margin-top: 0.5rem;
 }
 
 /* ---------- Search ---------- */
@@ -583,6 +624,12 @@ main {
   transform: translateY(-1px);
 }
 
+.download-btn:active {
+  background: var(--color-primary-dark, var(--color-primary));
+  color: #fdfaf1;
+  transform: translateY(0);
+}
+
 .download-meta {
   font-size: 0.72rem;
   font-weight: 500;
@@ -634,6 +681,8 @@ main {
 }
 
 .load-more-btn:active {
+  background: var(--color-primary);
+  color: #fdfaf1;
   transform: translateY(0);
 }
 
@@ -848,7 +897,8 @@ main {
   color: var(--color-text-muted);
 }
 
-.cookie-btn-decline:hover {
+.cookie-btn-decline:hover,
+.cookie-btn-decline:active {
   border-color: var(--color-text-muted);
   color: var(--color-text);
 }
@@ -859,7 +909,8 @@ main {
   color: #fdfaf1;
 }
 
-.cookie-btn-accept:hover {
+.cookie-btn-accept:hover,
+.cookie-btn-accept:active {
   background: var(--color-primary-dark, var(--color-primary));
   border-color: var(--color-primary-dark, var(--color-primary));
 }
@@ -888,5 +939,21 @@ main {
   }
   .post-card {
     padding: 1.35rem;
+  }
+  h1 {
+    font-size: 1.7rem;
+  }
+  .post-header h1 {
+    font-size: 1.75rem;
+  }
+  .post-content blockquote {
+    padding: 0.9em 1.1em 0.9em 2.4em;
+  }
+  .post-content blockquote::before {
+    left: 0.35em;
+    font-size: 1.9em;
+  }
+  .download-info h2 {
+    font-size: 1rem;
   }
 }
