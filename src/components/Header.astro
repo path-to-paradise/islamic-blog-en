@@ -32,9 +32,9 @@ const contactHref = `${base}/contact`;
         aria-controls="site-nav"
       >
         <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-          <rect y="4" width="24" height="2.4" rx="1.2" fill="currentColor" />
-          <rect y="10.8" width="24" height="2.4" rx="1.2" fill="currentColor" />
-          <rect y="17.6" width="24" height="2.4" rx="1.2" fill="currentColor" />
+          <rect class="bar-top" y="4" width="24" height="2.4" rx="1.2" fill="currentColor" />
+          <rect class="bar-mid" y="10.8" width="24" height="2.4" rx="1.2" fill="currentColor" />
+          <rect class="bar-bottom" y="17.6" width="24" height="2.4" rx="1.2" fill="currentColor" />
         </svg>
       </button>
     </div>
@@ -80,5 +80,14 @@ const contactHref = `${base}/contact`;
         toggle.setAttribute("aria-expanded", "false");
       });
     });
+  }
+
+  const header = document.querySelector(".site-header");
+  if (header) {
+    const updateScrolled = () => {
+      header.classList.toggle("is-scrolled", window.scrollY > 8);
+    };
+    updateScrolled();
+    window.addEventListener("scroll", updateScrolled, { passive: true });
   }
 </script>
