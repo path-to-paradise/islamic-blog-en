@@ -10,6 +10,7 @@ A static, one-column Islamic blog built with [Astro](https://astro.build). No ba
 - Individual post pages with clean typography, including RTL support for Arabic text
 - Client-side search (`/search`) across post titles, descriptions, and tags — no backend needed
 - Downloads page (`/downloads`) for sharing printable resources (PDFs) alongside the blog
+- Google Analytics, gated behind a GDPR-style cookie consent banner — no analytics script loads until a visitor accepts
 - Dark mode (follows the reader's system setting)
 - 8 sample posts included so you can see the layout and Load More button in action
 
@@ -61,6 +62,15 @@ The `/downloads` page lists resources from [`src/pages/downloads.astro`](src/pag
 
 The four PDFs included are placeholder samples — swap them for your own resources.
 
+## Analytics & cookie consent
+
+Google Analytics is wired up in [`src/components/CookieConsent.astro`](src/components/CookieConsent.astro) but never loads until a visitor clicks **Accept** on the cookie banner (shown once, on first visit). Declining — or never answering — means no analytics script and no analytics cookies are ever set.
+
+- To change the GA property, update `GA_MEASUREMENT_ID` at the top of that file.
+- To remove analytics entirely, delete the `<CookieConsent />` line from [`src/layouts/BaseLayout.astro`](src/layouts/BaseLayout.astro).
+- The visitor's choice is remembered in `localStorage` (not a cookie) so the banner doesn't reappear — a "Manage cookie preferences" link in the footer lets them reopen it and change their mind.
+- [`src/pages/privacy.astro`](src/pages/privacy.astro) explains what's collected — update it if you add other tracking or change what data you collect.
+
 ## Customizing the look
 
 - Colors, fonts, and spacing all live in [`src/styles/global.css`](src/styles/global.css) as CSS variables at the top of the file.
@@ -97,7 +107,7 @@ The four PDFs included are placeholder samples — swap them for your own resour
 src/
   content/posts/       Blog posts (Markdown)
   content/config.ts    Post frontmatter schema
-  components/          Header, Footer, PostCard
+  components/          Header, Footer, PostCard, CookieConsent
   layouts/             BaseLayout (shared shell), PostLayout (post pages)
   pages/
     index.astro         Homepage with Load More
@@ -105,6 +115,7 @@ src/
     contact.astro       Contact page
     search.astro        Client-side search (no backend)
     downloads.astro     Downloads page (lists files in public/downloads)
+    privacy.astro       Privacy policy
     posts/[...slug].astro   Individual post pages
   styles/global.css    All styling / theme variables
 public/

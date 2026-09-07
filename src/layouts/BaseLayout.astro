@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import CookieConsent from "../components/CookieConsent.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -34,5 +35,6 @@ const pageTitle = title === "Noor & Knowledge" ? title : `${title} · Noor & Kno
       <slot />
     </main>
     <Footer />
+    <CookieConsent />
   </body>
 </html>
