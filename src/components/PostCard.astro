@@ -16,8 +16,8 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
 });
 ---
 
-<li>
-  <article class="post-card" hidden={hidden}>
+<li hidden={hidden}>
+  <article class="post-card">
     <div class="post-card-eyebrow">
       <time datetime={pubDate.toISOString()}>{formattedDate}</time>
     </div>

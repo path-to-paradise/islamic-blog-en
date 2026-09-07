@@ -460,10 +460,6 @@ main {
   box-shadow: var(--shadow-card-hover);
 }
 
-.post-card[hidden] {
-  display: none;
-}
-
 .post-card-eyebrow {
   display: flex;
   align-items: center;

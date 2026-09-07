@@ -41,12 +41,12 @@ const hasMore = allPosts.length > PAGE_SIZE;
     const pageSize = Number(list.dataset.pageSize) || 5;
 
     button.addEventListener("click", () => {
-      const hiddenItems = Array.from(list.querySelectorAll(".post-card[hidden]"));
+      const hiddenItems = Array.from(list.querySelectorAll("li[hidden]"));
       hiddenItems.slice(0, pageSize).forEach((item) => {
         item.removeAttribute("hidden");
       });
 
-      const remaining = list.querySelectorAll(".post-card[hidden]").length;
+      const remaining = list.querySelectorAll("li[hidden]").length;
       if (remaining === 0) {
         button.remove();
         endNote?.removeAttribute("hidden");
