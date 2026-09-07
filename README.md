@@ -71,6 +71,10 @@ Google Analytics is wired up in [`src/components/CookieConsent.astro`](src/compo
 - The visitor's choice is remembered in `localStorage` (not a cookie) so the banner doesn't reappear — a "Manage cookie preferences" link in the footer lets them reopen it and change their mind.
 - [`src/pages/privacy.astro`](src/pages/privacy.astro) explains what's collected — update it if you add other tracking or change what data you collect.
 
+## Legal pages
+
+[`privacy.astro`](src/pages/privacy.astro), [`terms.astro`](src/pages/terms.astro), and [`disclaimer.astro`](src/pages/disclaimer.astro) (all linked in the footer) are a reasonable starting point, not legal advice — laws like GDPR vary by where your visitors are, and this content hasn't been reviewed by a lawyer. Have someone qualified review them (and fill in a real jurisdiction/governing-law line in the Terms) before treating them as your actual legal footing, especially if the site handles anything beyond reading posts.
+
 ## Customizing the look
 
 - Colors, fonts, and spacing all live in [`src/styles/global.css`](src/styles/global.css) as CSS variables at the top of the file.
@@ -116,6 +120,8 @@ src/
     search.astro        Client-side search (no backend)
     downloads.astro     Downloads page (lists files in public/downloads)
     privacy.astro       Privacy policy
+    terms.astro         Terms of Service
+    disclaimer.astro    Disclaimer (not medical/religious advice, no guaranteed outcomes)
     posts/[...slug].astro   Individual post pages
   styles/global.css    All styling / theme variables
 public/

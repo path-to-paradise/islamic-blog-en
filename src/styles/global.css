@@ -789,6 +789,10 @@ main {
   color: var(--color-primary-dark, var(--color-primary));
 }
 
+.footer-legal {
+  line-height: 1.9;
+}
+
 /* ---------- Cookie consent banner ---------- */
 
 .cookie-banner {
