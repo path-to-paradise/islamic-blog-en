@@ -1,0 +1,136 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const searchIndex = posts.map((post) => ({
+  title: post.data.title,
+  description: post.data.description,
+  tags: post.data.tags,
+  slug: post.slug,
+  date: post.data.pubDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }),
+  iso: post.data.pubDate.toISOString(),
+}));
+---
+
+<BaseLayout title="Search" description="Search posts on Noor & Knowledge.">
+  <h1>Search</h1>
+  <p class="search-intro">Search by title, topic, or tag.</p>
+
+  <input
+    type="search"
+    id="search-input"
+    class="search-input"
+    placeholder="Search posts…"
+    autocomplete="off"
+  />
+
+  <p class="search-status" id="search-status"></p>
+  <ul class="post-list" id="search-results"></ul>
+
+  <script type="application/json" id="search-data" set:html={JSON.stringify(searchIndex)} />
+</BaseLayout>
+
+<script>
+  const BASE_URL = import.meta.env.BASE_URL;
+
+  const dataEl = document.getElementById("search-data");
+  const input = document.getElementById("search-input") as HTMLInputElement | null;
+  const results = document.getElementById("search-results");
+  const status = document.getElementById("search-status");
+
+  type SearchPost = {
+    title: string;
+    description: string;
+    tags: string[];
+    slug: string;
+    date: string;
+    iso: string;
+  };
+
+  const posts: SearchPost[] = dataEl ? JSON.parse(dataEl.textContent || "[]") : [];
+
+  function escapeHtml(value: string) {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function postUrl(slug: string) {
+    return `${BASE_URL.replace(/\/$/, "")}/posts/${slug}`;
+  }
+
+  function renderResults(matches: SearchPost[], query: string) {
+    if (!results || !status) return;
+
+    if (query.trim() === "") {
+      results.innerHTML = "";
+      status.textContent = "";
+      return;
+    }
+
+    if (matches.length === 0) {
+      results.innerHTML = "";
+      status.textContent = `No posts found for "${query}".`;
+      return;
+    }
+
+    status.textContent = `${matches.length} post${matches.length === 1 ? "" : "s"} found.`;
+
+    results.innerHTML = matches
+      .map((post) => {
+        const tags = post.tags
+          .map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`)
+          .join("");
+        return `
+          <li>
+            <article class="post-card">
+              <div class="post-card-eyebrow">
+                <time datetime="${post.iso}">${post.date}</time>
+              </div>
+              <h2><a href="${postUrl(post.slug)}">${escapeHtml(post.title)}</a></h2>
+              <p class="excerpt">${escapeHtml(post.description)}</p>
+              ${tags ? `<div class="tag-row">${tags}</div>` : ""}
+              <a class="read-more" href="${postUrl(post.slug)}">Read the full post →</a>
+            </article>
+          </li>
+        `;
+      })
+      .join("");
+  }
+
+  function search(query: string) {
+    const q = query.trim().toLowerCase();
+    if (q === "") return [];
+    return posts.filter((post) => {
+      const haystack = [post.title, post.description, ...post.tags].join(" ").toLowerCase();
+      return haystack.includes(q);
+    });
+  }
+
+  if (input) {
+    const params = new URLSearchParams(window.location.search);
+    const initialQuery = params.get("q") || "";
+    if (initialQuery) {
+      input.value = initialQuery;
+      renderResults(search(initialQuery), initialQuery);
+    }
+
+    input.addEventListener("input", () => {
+      renderResults(search(input.value), input.value);
+    });
+
+    if (!initialQuery) {
+      input.focus();
+    }
+  }
+</script>

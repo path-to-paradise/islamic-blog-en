@@ -8,6 +8,7 @@ A static, one-column Islamic blog built with [Astro](https://astro.build). No ba
 - Posts written in Markdown with frontmatter (title, description, date, author, tags)
 - "Load more posts" button on the homepage (loads 5 at a time, no backend/pagination routes needed)
 - Individual post pages with clean typography, including RTL support for Arabic text
+- Client-side search (`/search`) across post titles, descriptions, and tags — no backend needed
 - Dark mode (follows the reader's system setting)
 - 8 sample posts included so you can see the layout and Load More button in action
 
@@ -92,6 +93,7 @@ src/
     index.astro         Homepage with Load More
     about.astro         About page
     contact.astro       Contact page
+    search.astro        Client-side search (no backend)
     posts/[...slug].astro   Individual post pages
   styles/global.css    All styling / theme variables
 ```
