@@ -1,25 +1,76 @@
 ---
 const SITE_NAME = "Noor & Knowledge";
 const SITE_TAGLINE = "Reflections on faith, worship, and daily life — written simply, for everyone.";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const homeHref = `${base}/`;
+const searchHref = `${base}/search`;
+const aboutHref = `${base}/about`;
+const contactHref = `${base}/contact`;
 ---
 
 <header class="site-header">
   <div class="wrap">
-    <a href="/" class="brand">
-      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M20 3 C27 12 29.5 18.5 25 24.5 C23.3 26.8 16.7 26.8 15 24.5 C10.5 18.5 13 12 20 3 Z"
-          fill="#e0b84b" opacity="0.95"/>
-        <ellipse cx="20" cy="30.5" rx="12" ry="3.4" fill="#e0b84b" opacity="0.95"/>
-        <rect x="8" y="33.5" width="24" height="3" rx="1.5" fill="#e0b84b" opacity="0.75"/>
-      </svg>
-      {SITE_NAME}
-    </a>
+    <div class="header-top">
+      <a href={homeHref} class="brand">
+        <svg class="brand-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M20 3 C27 12 29.5 18.5 25 24.5 C23.3 26.8 16.7 26.8 15 24.5 C10.5 18.5 13 12 20 3 Z"
+            fill="#e0b84b" opacity="0.95"/>
+          <ellipse cx="20" cy="30.5" rx="12" ry="3.4" fill="#e0b84b" opacity="0.95"/>
+          <rect x="8" y="33.5" width="24" height="3" rx="1.5" fill="#e0b84b" opacity="0.75"/>
+        </svg>
+        {SITE_NAME}
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="site-nav"
+      >
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <rect y="4" width="24" height="2.4" rx="1.2" fill="currentColor" />
+          <rect y="10.8" width="24" height="2.4" rx="1.2" fill="currentColor" />
+          <rect y="17.6" width="24" height="2.4" rx="1.2" fill="currentColor" />
+        </svg>
+      </button>
+    </div>
+
     <p class="site-tagline">{SITE_TAGLINE}</p>
-    <nav class="site-nav">
-      <a href="/">Home</a>
-      <a href="/search">Search</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
+
+    <form class="header-search" action={searchHref} method="get" role="search">
+      <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true">
+        <circle cx="9" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+        <line x1="13.6" y1="13.6" x2="18" y2="18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </svg>
+      <input type="search" name="q" placeholder="Search posts…" aria-label="Search posts" />
+    </form>
+
+    <nav class="site-nav" id="site-nav">
+      <a href={homeHref}>Home</a>
+      <a href={aboutHref}>About</a>
+      <a href={contactHref}>Contact</a>
     </nav>
   </div>
 </header>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const nav = document.getElementById("site-nav");
+
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const isOpen = nav.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+</script>
