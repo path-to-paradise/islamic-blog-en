@@ -24,19 +24,23 @@ const searchIndex = posts.map((post) => ({
   <h1>Search</h1>
   <p class="search-intro">Search by title, topic, or tag.</p>
 
-  <div class="search-input-wrap">
-    <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true">
-      <circle cx="9" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
-      <line x1="13.6" y1="13.6" x2="18" y2="18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-    </svg>
-    <input
-      type="search"
-      id="search-input"
-      class="search-input"
-      placeholder="Search posts…"
-      autocomplete="off"
-    />
-  </div>
+  <form class="header-search header-search--page" id="page-search-form" role="search">
+    <div class="header-search-field">
+      <input
+        type="search"
+        id="search-input"
+        placeholder="Search posts…"
+        aria-label="Search posts"
+        autocomplete="off"
+      />
+    </div>
+    <button type="submit" class="header-search-btn" aria-label="Search">
+      <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true">
+        <circle cx="9" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+        <line x1="13.6" y1="13.6" x2="18" y2="18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </svg>
+    </button>
+  </form>
 
   <p class="search-status" id="search-status"></p>
   <ul class="post-list" id="search-results"></ul>
@@ -123,6 +127,8 @@ const searchIndex = posts.map((post) => ({
     });
   }
 
+  const form = document.getElementById("page-search-form");
+
   if (input) {
     const params = new URLSearchParams(window.location.search);
     const initialQuery = params.get("q") || "";
@@ -133,6 +139,21 @@ const searchIndex = posts.map((post) => ({
 
     input.addEventListener("input", () => {
       renderResults(search(input.value), input.value);
+    });
+
+    // Pressing Enter or clicking the search button acts the same as the header
+    // search bar (which submits here) - run the same search and keep the URL
+    // shareable, without a full page reload since we're already on this page.
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      renderResults(search(input.value), input.value);
+      const url = new URL(window.location.href);
+      if (input.value.trim()) {
+        url.searchParams.set("q", input.value);
+      } else {
+        url.searchParams.delete("q");
+      }
+      window.history.replaceState(null, "", url);
     });
 
     if (!initialQuery) {

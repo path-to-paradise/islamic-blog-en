@@ -259,45 +259,45 @@ img {
 }
 
 .header-search {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 260px;
+  flex-shrink: 0;
+  transition: width 0.25s ease;
+}
+
+.header-search:focus-within {
+  width: 320px;
+}
+
+.header-search-field {
   --hs-text: #1c2b21;
   --hs-text-muted: #6b7a6f;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  width: 240px;
-  flex-shrink: 0;
-  padding: 0.7rem 1.15rem;
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  padding: 0 0.9rem;
   background: #fdfcf8;
   border: 1px solid transparent;
   border-radius: var(--radius-sm);
   box-shadow: 0 1px 2px rgba(10, 58, 36, 0.12), 0 10px 24px -10px rgba(10, 58, 36, 0.45);
-  transition: width 0.25s ease, box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
-.header-search:hover {
+.header-search-field:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(10, 58, 36, 0.14), 0 14px 28px -10px rgba(10, 58, 36, 0.5);
 }
 
-.header-search:focus-within {
-  width: 300px;
+.header-search-field:focus-within {
   border-color: var(--color-accent);
   box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.18), 0 14px 28px -10px rgba(10, 58, 36, 0.5);
 }
 
-.header-search .search-icon {
-  width: 17px;
-  height: 17px;
-  flex-shrink: 0;
-  transition: color 0.2s ease;
-  color: var(--hs-text-muted);
-}
-
-.header-search:focus-within .search-icon {
-  color: var(--color-accent);
-}
-
-.header-search input {
+.header-search-field input {
   flex: 1;
   min-width: 0;
   border: none;
@@ -305,14 +305,66 @@ img {
   color: var(--hs-text);
   font: inherit;
   font-size: 0.92rem;
+  line-height: normal;
+  padding: 0;
+  height: 100%;
 }
 
-.header-search input::placeholder {
+.header-search-field input::-webkit-search-decoration,
+.header-search-field input::-webkit-search-cancel-button,
+.header-search-field input::-webkit-search-results-button,
+.header-search-field input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+.header-search-field input::placeholder {
   color: var(--hs-text-muted);
 }
 
-.header-search input:focus {
+.header-search-field input:focus {
   outline: none;
+}
+
+/* The search button is deliberately its own separate, solid element - not tucked
+   inside the input's pill - so it reads clearly as its own clickable control. */
+.header-search-btn {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-header-to);
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(10, 58, 36, 0.12), 0 6px 16px -6px rgba(10, 58, 36, 0.45);
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.header-search-btn:hover {
+  background: #eccb6b;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(10, 58, 36, 0.14), 0 10px 20px -6px rgba(10, 58, 36, 0.5);
+}
+
+.header-search-btn:focus-visible {
+  outline: 2px solid #fdfcf8;
+  outline-offset: 2px;
+}
+
+.header-search-btn:active {
+  transform: translateY(0) scale(0.94);
+}
+
+.header-search .search-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 720px) {
@@ -363,6 +415,15 @@ img {
   .header-search:focus-within {
     width: 100%;
   }
+
+  .header-search-field {
+    height: 44px;
+  }
+
+  .header-search-btn {
+    width: 44px;
+    height: 44px;
+  }
 }
 
 /* ---------- Post list ---------- */
@@ -390,44 +451,43 @@ main {
   color: var(--color-text-muted);
 }
 
-.search-input-wrap {
-  position: relative;
+/* The /search page's search bar reuses .header-search as its base component (same
+   shape, spacing, icon, and button) via this modifier, which only overrides what
+   genuinely needs to differ: full width instead of a fixed compact width, and
+   theme-aware colors instead of the header's fixed off-white (the header always
+   sits on the fixed dark-green banner; this one sits on the page's own light/dark
+   background). Every child rule under .header-search keys off these same custom
+   properties, so overriding them here is enough to re-theme the whole component. */
+.header-search--page {
+  width: 100%;
   margin: 0.5rem 0 1rem;
 }
 
-.search-input-wrap .search-icon {
-  position: absolute;
-  left: 1.15rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  color: var(--color-text-muted);
-  pointer-events: none;
-  transition: color 0.2s ease;
-}
-
-.search-input-wrap:focus-within .search-icon {
-  color: var(--color-primary);
-}
-
-.search-input {
+.header-search--page:focus-within {
   width: 100%;
-  font: inherit;
-  font-size: 1.05rem;
-  padding: 0.9rem 1.2rem 0.9rem 3.1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 999px;
-  background: var(--color-surface);
-  color: var(--color-text);
-  box-shadow: var(--shadow-xs);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.search-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
+.header-search--page .header-search-field {
+  --hs-text: var(--color-text);
+  --hs-text-muted: var(--color-text-muted);
+  height: 48px;
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-xs);
+}
+
+.header-search--page .header-search-field:hover {
+  transform: none;
+  box-shadow: var(--shadow-xs);
+}
+
+.header-search--page .header-search-field:focus-within {
   box-shadow: 0 0 0 4px var(--color-accent-soft);
+}
+
+.header-search--page .header-search-btn {
+  width: 48px;
+  height: 48px;
 }
 
 .search-status {
