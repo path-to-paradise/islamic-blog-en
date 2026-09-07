@@ -5,6 +5,7 @@ const SITE_TAGLINE = "Reflections on faith, worship, and daily life — written 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const homeHref = `${base}/`;
 const searchHref = `${base}/search`;
+const downloadsHref = `${base}/downloads`;
 const aboutHref = `${base}/about`;
 const contactHref = `${base}/contact`;
 ---
@@ -43,6 +44,7 @@ const contactHref = `${base}/contact`;
     <nav class="site-nav" id="site-nav">
       <div class="nav-links">
         <a href={homeHref}>Home</a>
+        <a href={downloadsHref}>Downloads</a>
         <a href={aboutHref}>About</a>
         <a href={contactHref}>Contact</a>
       </div>

@@ -9,6 +9,7 @@ A static, one-column Islamic blog built with [Astro](https://astro.build). No ba
 - "Load more posts" button on the homepage (loads 5 at a time, no backend/pagination routes needed)
 - Individual post pages with clean typography, including RTL support for Arabic text
 - Client-side search (`/search`) across post titles, descriptions, and tags — no backend needed
+- Downloads page (`/downloads`) for sharing printable resources (PDFs) alongside the blog
 - Dark mode (follows the reader's system setting)
 - 8 sample posts included so you can see the layout and Load More button in action
 
@@ -50,6 +51,15 @@ Wrap Arabic text in a paragraph with the `arabic` class to get right-to-left lay
 ```html
 <p class="arabic">الْحَمْدُ لِلَّهِ</p>
 ```
+
+### Adding a download
+
+The `/downloads` page lists resources from [`src/pages/downloads.astro`](src/pages/downloads.astro). To add one:
+
+1. Drop the file (e.g. a PDF) into [`public/downloads/`](public/downloads).
+2. Add an entry to the `resources` array at the top of `src/pages/downloads.astro` with its filename, title, and description — file size is read automatically at build time.
+
+The four PDFs included are placeholder samples — swap them for your own resources.
 
 ## Customizing the look
 
@@ -94,8 +104,11 @@ src/
     about.astro         About page
     contact.astro       Contact page
     search.astro        Client-side search (no backend)
+    downloads.astro     Downloads page (lists files in public/downloads)
     posts/[...slug].astro   Individual post pages
   styles/global.css    All styling / theme variables
+public/
+  downloads/            Downloadable files (PDFs, etc.) — served as-is
 ```
 
 ## A note on content
