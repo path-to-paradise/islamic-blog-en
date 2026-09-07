@@ -28,6 +28,6 @@ const formattedDate = pubDate.toLocaleDateString("en-US", {
         {tags.map((tag) => <span class="tag">{tag}</span>)}
       </div>
     )}
-    <a class="read-more" href={`/posts/${post.slug}`}>Read the full post →</a>
+    <a class="read-more" href={`/posts/${post.slug}`}>Read the full post <span class="arrow">→</span></a>
   </article>
 </li>

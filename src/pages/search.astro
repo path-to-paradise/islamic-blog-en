@@ -24,13 +24,19 @@ const searchIndex = posts.map((post) => ({
   <h1>Search</h1>
   <p class="search-intro">Search by title, topic, or tag.</p>
 
-  <input
-    type="search"
-    id="search-input"
-    class="search-input"
-    placeholder="Search posts…"
-    autocomplete="off"
-  />
+  <div class="search-input-wrap">
+    <svg class="search-icon" viewBox="0 0 20 20" aria-hidden="true">
+      <circle cx="9" cy="9" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+      <line x1="13.6" y1="13.6" x2="18" y2="18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+    </svg>
+    <input
+      type="search"
+      id="search-input"
+      class="search-input"
+      placeholder="Search posts…"
+      autocomplete="off"
+    />
+  </div>
 
   <p class="search-status" id="search-status"></p>
   <ul class="post-list" id="search-results"></ul>
@@ -100,7 +106,7 @@ const searchIndex = posts.map((post) => ({
               <h2><a href="${postUrl(post.slug)}">${escapeHtml(post.title)}</a></h2>
               <p class="excerpt">${escapeHtml(post.description)}</p>
               ${tags ? `<div class="tag-row">${tags}</div>` : ""}
-              <a class="read-more" href="${postUrl(post.slug)}">Read the full post →</a>
+              <a class="read-more" href="${postUrl(post.slug)}">Read the full post <span class="arrow">→</span></a>
             </article>
           </li>
         `;
