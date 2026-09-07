@@ -6,8 +6,6 @@ author: "Khalid"
 tags: ["Salewat"]
 ---
 
-# A Very Powerful Salawat to Get What You Want
-
 This is a very powerful Salawat. Whatever intention you recite it with will come to pass.
 
 You can recite this Salawat for all kinds of needs:
