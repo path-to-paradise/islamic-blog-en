@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const CONTACT_EMAIL = "hello@example.com";
+---
+
+<BaseLayout title="Contact" description="Get in touch with Noor & Knowledge.">
+  <article class="post-content">
+    <h1>Contact</h1>
+    <p>
+      Spotted an error, have a correction, or a topic you'd like to see covered? Reach out —
+      every message is read.
+    </p>
+    <p>
+      <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+    </p>
+    <p>
+      This is a static site with no contact form or backend, so email is the most reliable way
+      to reach out. Replace the address above in
+      <code>src/pages/contact.astro</code> with your own.
+    </p>
+  </article>
+</BaseLayout>

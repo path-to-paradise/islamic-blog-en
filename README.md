@@ -91,6 +91,7 @@ src/
   pages/
     index.astro         Homepage with Load More
     about.astro         About page
+    contact.astro       Contact page
     posts/[...slug].astro   Individual post pages
   styles/global.css    All styling / theme variables
 ```
