@@ -73,7 +73,8 @@ img {
 .wrap {
   max-width: 720px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 /* ---------- Header ---------- */
@@ -139,7 +140,8 @@ img {
 /* ---------- Post list ---------- */
 
 main {
-  padding: 3rem 0 4rem;
+  padding-top: 3.5rem;
+  padding-bottom: 4rem;
 }
 
 .post-list {
@@ -232,7 +234,8 @@ main {
 .load-more-row {
   display: flex;
   justify-content: center;
-  margin-top: 2.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
 }
 
 .load-more-btn {
