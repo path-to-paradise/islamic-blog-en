@@ -1,0 +1,56 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostCard from "../components/PostCard.astro";
+
+const PAGE_SIZE = 5;
+
+const allPosts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const hasMore = allPosts.length > PAGE_SIZE;
+---
+
+<BaseLayout title="The Lantern" description="Reflections on faith, worship, and daily life — written simply, for everyone.">
+  <ul class="post-list" id="post-list" data-page-size={PAGE_SIZE}>
+    {allPosts.map((post, i) => (
+      <PostCard post={post} hidden={i >= PAGE_SIZE} />
+    ))}
+  </ul>
+
+  {allPosts.length === 0 && <p>No posts yet — check back soon.</p>}
+
+  {hasMore && (
+    <div class="load-more-row">
+      <button type="button" class="load-more-btn" id="load-more-btn">
+        Load more posts
+      </button>
+    </div>
+  )}
+
+  <p class="end-note" id="end-note" hidden>You've reached the end — that's every post so far.</p>
+</BaseLayout>
+
+<script>
+  const list = document.getElementById("post-list");
+  const button = document.getElementById("load-more-btn");
+  const endNote = document.getElementById("end-note");
+
+  if (list && button) {
+    const pageSize = Number(list.dataset.pageSize) || 5;
+
+    button.addEventListener("click", () => {
+      const hiddenItems = Array.from(list.querySelectorAll(".post-card[hidden]"));
+      hiddenItems.slice(0, pageSize).forEach((item) => {
+        item.removeAttribute("hidden");
+      });
+
+      const remaining = list.querySelectorAll(".post-card[hidden]").length;
+      if (remaining === 0) {
+        button.remove();
+        endNote?.removeAttribute("hidden");
+      }
+    });
+  }
+</script>

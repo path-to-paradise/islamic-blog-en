@@ -1,0 +1,33 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+  hidden?: boolean;
+}
+
+const { post, hidden = false } = Astro.props;
+const { title, description, pubDate, tags } = post.data;
+
+const formattedDate = pubDate.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<li>
+  <article class="post-card" hidden={hidden}>
+    <div class="post-card-eyebrow">
+      <time datetime={pubDate.toISOString()}>{formattedDate}</time>
+    </div>
+    <h2><a href={`/posts/${post.slug}`}>{title}</a></h2>
+    <p class="excerpt">{description}</p>
+    {tags.length > 0 && (
+      <div class="tag-row">
+        {tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+    )}
+    <a class="read-more" href={`/posts/${post.slug}`}>Read the full post →</a>
+  </article>
+</li>
