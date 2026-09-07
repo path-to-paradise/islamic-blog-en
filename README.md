@@ -1,4 +1,4 @@
-# The Lantern — Islamic Blog
+# Noor & Knowledge — Islamic Blog
 
 A static, one-column Islamic blog built with [Astro](https://astro.build). No backend, no database — everything is Markdown files compiled to static HTML at build time. Deploys for free to GitHub Pages or Cloudflare Pages.
 

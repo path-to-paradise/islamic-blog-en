@@ -12,7 +12,7 @@ const allPosts = (await getCollection("posts", ({ data }) => !data.draft)).sort(
 const hasMore = allPosts.length > PAGE_SIZE;
 ---
 
-<BaseLayout title="The Lantern" description="Reflections on faith, worship, and daily life — written simply, for everyone.">
+<BaseLayout title="Noor & Knowledge" description="Reflections on faith, worship, and daily life — written simply, for everyone.">
   <ul class="post-list" id="post-list" data-page-size={PAGE_SIZE}>
     {allPosts.map((post, i) => (
       <PostCard post={post} hidden={i >= PAGE_SIZE} />
